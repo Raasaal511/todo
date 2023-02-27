@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo List</title>
+    <link href="{{ url_for('static', path='/style.css') }}" rel="stylesheet">
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="todo">
+    <h1 class="main_title">Добавь себе задачу</h1>
+        <div class="todo_create">
+            <form class="todo_form" action="{{ url_for('create_todo') }}" method="post">
+                <input class="todo_form_title" type="text" name="title" placeholder="Введите название задачи"><br>
+                <button class="todo_form_button" type="submit">Add</button>
+            </form>
+        </div>
+
+        <div class="todo_list">
+
+            {% for todo in todo_list %}
+                <div class="todo_item">
+                    <h2 class="todo_title">
+                        <span class="todo_id">№{{ todo.id }}</span>
+                        <span class="todo_title_text">{{ todo.title }}</span>
+                    </h2>
+                    {% if todo.complate %}
+                        <a href="{{ url_for('update_todo', todo_id=todo.id) }}" class="todo_update">Начать</a>
+                        <a href="{{ url_for('delete_todo', todo_id=todo.id) }}" class="todo_delete">Удалить</a>
+                    {% else %}
+                        <a href="{{ url_for('update_todo', todo_id=todo.id) }}" class="todo_update">Завершить</a>
+                    {% endif %}
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
